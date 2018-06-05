@@ -10,11 +10,16 @@ require(lattice);require(RColorBrewer);
 my.work.computer=T;
 if(my.work.computer){
   setwd("/Users/philb/Desktop/Work/ExpCohortStudy/Efficacy");
-  titesim_folder = "/users/philb/Desktop/Work/ExpCohortStudy/";
+  titesim_folder = "/users/philb/Desktop/Work/ExpCohortStudy/Efficacy/github";
   write_to_folder = "/Users/philb/Desktop/Work/ExpCohortStudy/Efficacy";
 } 
 
-sim_set = c(1:18);
+#sim_set is constructed according to the 'arglist' variable constructed by genParams
+#1:18 = scenarios 1-6 from the main AOC paper (3 DEC types for each scenario)
+#19:36 = scenarios 1-6 from the main AOC paper using a different skeleton for the crm
+#37:48 = scenarios 1-6 from the supplement to the AOC paper
+#49:60 = scenarios 1-6 from the supplement to the AOC paper using a different skeleton for the crm
+sim_set = c(1:18,37:48);#load the first skeleton sets of skims
 file.name = "DEC_eff";
 
 nonnull_category_codes = ((1:8)*100+1);
@@ -246,6 +251,10 @@ my.settings <- list(
 )
 #9D9D9D
 
+#################################################################
+#################################################################
+scenario_set = 1:6;#choose this (and comment out the below line) for the figures in the main text 
+#scenario_set = 7:10;#choose this (and comment out the above line) for the figures in the supplement 
 
 #################################################################
 #################################################################
@@ -255,12 +264,12 @@ my.settings$superpose.polygon$col = onestage_colors_short;
 #trellis.device("pdf",file="recommendations_dec15_mod.pdf",height=5,width=7,family="serif");
 trellis.device("jpeg",file="recommendations_dec15_mod.jpg",height=5,width=7,family="serif",units="in",res=500);
 barchart(prop~x|factor(setting),groups=code,
-         data=onestage_nonnull_props_short[onestage_nonnull_props_short$analysis=="mod",],
+         data=onestage_nonnull_props_short[onestage_nonnull_props_short$analysis=="mod" & onestage_nonnull_props_short$setting %in% scenario_set,],
          main = "# in DEC = 15",
          stack = T,
          par.settings=my.settings,ylim=c(-0.001,1),
          scales = list(x=list(cex=0.75),y=list(at=c(0.2,0.4,0.6,0.8),labels=c(20,40,60,80))),
-         layout=c(2,3),as.table=T,ylab="",
+         layout=c(2,ceiling(length(scenario_set)/2)),as.table=T,ylab="",
          auto.key=list(space="top", columns=5, 
                        points=FALSE, rectangles=TRUE,
                        title="", cex.title=1,
@@ -280,12 +289,12 @@ my.settings$superpose.polygon$col = twostage_colors_short;
 #trellis.device("pdf",file="recommendations_dec30_mod.pdf",height=5,width=7,family="serif");
 trellis.device("jpeg",file="recommendations_dec30_mod.jpg",height=5,width=7,family="serif",units="in",res=500);
 barchart(prop~x|factor(setting),groups=code,
-         data=twostage_nonnull_props_short[twostage_nonnull_props_short$analysis=="mod",],
+         data=twostage_nonnull_props_short[twostage_nonnull_props_short$analysis=="mod"& twostage_nonnull_props_short$setting %in% scenario_set,],
          main = "# in DEC = 30 (With Futility Analysis at 15)",
          stack = T,
          par.settings=my.settings,ylim=c(-0.001,1),
          scales = list(x=list(cex=0.75),y=list(at=c(0.2,0.4,0.6,0.8),labels=c(20,40,60,80))),
-         layout=c(2,3),as.table=T,ylab="",
+         layout=c(2,ceiling(length(scenario_set)/2)),as.table=T,ylab="",
          auto.key=list(space="top", columns=5, 
                        points=FALSE, rectangles=TRUE,
                        title="", cex.title=1,
@@ -306,12 +315,12 @@ my.settings$superpose.polygon$col = rev(grey.colors(5,start=0,end=0.8));
 #trellis.device("pdf",file="recommendations_dec15_mod.pdf",height=5,width=7,family="serif");
 trellis.device("jpeg",file="recommendations_dec15_mod_bw.jpg",height=5,width=7,family="serif",units="in",res=600);
 barchart(prop~x|factor(setting),groups=code,
-         data=onestage_nonnull_props_short[onestage_nonnull_props_short$analysis=="mod",],
+         data=onestage_nonnull_props_short[onestage_nonnull_props_short$analysis=="mod" & onestage_nonnull_props_short$setting %in% scenario_set,],
          main = "# in DEC = 15",
          stack = T,
          par.settings=my.settings,ylim=c(-0.001,1),
          scales = list(x=list(cex=0.75),y=list(at=c(0.2,0.4,0.6,0.8),labels=c(20,40,60,80))),
-         layout=c(2,3),as.table=T,ylab="",
+         layout=c(2,ceiling(length(scenario_set)/2)),as.table=T,ylab="",
          auto.key=list(space="top", columns=5, 
                        points=FALSE, rectangles=TRUE,
                        title="", cex.title=1,
@@ -331,12 +340,12 @@ my.settings$superpose.polygon$col = rev(grey.colors(5,start=0,end=0.8));
 #trellis.device("pdf",file="recommendations_dec30_mod.pdf",height=5,width=7,family="serif");
 trellis.device("jpeg",file="recommendations_dec30_mod_bw.jpg",height=5,width=7,family="serif",units="in",res=600);
 barchart(prop~x|factor(setting),groups=code,
-         data=twostage_nonnull_props_short[twostage_nonnull_props_short$analysis=="mod",],
+         data=twostage_nonnull_props_short[twostage_nonnull_props_short$analysis=="mod"& twostage_nonnull_props_short$setting %in% scenario_set,],
          main = "# in DEC = 30 (With Futility Analysis at 15)",
          stack = T,
          par.settings=my.settings,ylim=c(-0.001,1),
          scales = list(x=list(cex=0.75),y=list(at=c(0.2,0.4,0.6,0.8),labels=c(20,40,60,80))),
-         layout=c(2,3),as.table=T,ylab="",
+         layout=c(2,ceiling(length(scenario_set)/2)),as.table=T,ylab="",
          auto.key=list(space="top", columns=5, 
                        points=FALSE, rectangles=TRUE,
                        title="", cex.title=1,
@@ -362,12 +371,12 @@ dev.off();
 my.settings$superpose.polygon$col = onestage_colors_short;
 trellis.device("pdf",file="recommendations_dec15_emp.pdf",height=5,width=7,family="serif");
 barchart(prop~x|factor(setting),groups=code,
-         data=onestage_nonnull_props_short[onestage_nonnull_props_short$analysis=="emp",],
+         data=onestage_nonnull_props_short[onestage_nonnull_props_short$analysis=="emp" & onestage_nonnull_props_short$setting %in% scenario_set,],
          main = "# in DEC = 15",
          stack = T,
          par.settings=my.settings,ylim=c(-0.001,1),
          scales = list(x=list(cex=0.75),y=list(at=c(0.2,0.4,0.6,0.8),labels=c(20,40,60,80))),
-         layout=c(2,3),as.table=T,ylab="",
+         layout=c(2,ceiling(length(scenario_set)/2)),as.table=T,ylab="",
          auto.key=list(space="top", columns=5, 
                        points=FALSE, rectangles=TRUE,
                        title="", cex.title=1,
@@ -386,12 +395,12 @@ dev.off();
 my.settings$superpose.polygon$col = twostage_colors_short;
 trellis.device("pdf",file="recommendations_dec30_emp.pdf",height=5,width=7,family="serif");
 barchart(prop~x|factor(setting),groups=code,
-         data=twostage_nonnull_props_short[twostage_nonnull_props_short$analysis=="emp",],
+         data=twostage_nonnull_props_short[twostage_nonnull_props_short$analysis=="emp"& twostage_nonnull_props_short$setting %in% scenario_set,],
          main = "# in DEC = 30 (With Futility Analysis at 15)",
          stack = T,
          par.settings=my.settings,ylim=c(-0.001,1),
          scales = list(x=list(cex=0.75),y=list(at=c(0.2,0.4,0.6,0.8),labels=c(20,40,60,80))),
-         layout=c(2,3),as.table=T,ylab="",
+         layout=c(2,ceiling(length(scenario_set)/2)),as.table=T,ylab="",
          auto.key=list(space="top", columns=5, 
                        points=FALSE, rectangles=TRUE,
                        title="", cex.title=1,
@@ -415,12 +424,12 @@ dev.off();
 my.settings$superpose.polygon$col = onestage_colors;
 trellis.device("pdf",file="recommendations_dec15.pdf",height=5,width=7,family="serif");
 barchart(prop~x|factor(setting),groups=code,
-         data=onestage_nonnull_props,
+         data=onestage_nonnull_props[onestage_nonnull_props$setting %in% scenario_set,],
          main = "# in DEC = 15",
          stack = T,
          par.settings=my.settings,ylim=c(-0.001,1),
          scales = list(x=list(cex=0.75)),
-         layout=c(2,3),as.table=T,ylab="",
+         layout=c(2,ceiling(length(scenario_set)/2)),as.table=T,ylab="",
          auto.key=list(space="top", columns=4, 
                        points=FALSE, rectangles=TRUE,
                        title="", cex.title=1,
@@ -438,12 +447,12 @@ dev.off();
 my.settings$superpose.polygon$col = twostage_colors;
 trellis.device("pdf",file="recommendations_dec30.pdf",height=5,width=7,family="serif");
 barchart(prop~x|factor(setting),groups=code,
-         data=twostage_nonnull_props,
+         data=twostage_nonnull_props[twostage_nonnull_props$setting %in% scenario_set,],
          main = "# in DEC = 30",
          stack = T,
          par.settings=my.settings,ylim=c(-0.001,1),
          scales = list(x=list(cex=0.75)),
-         layout=c(2,3),as.table=T,ylab="",
+         layout=c(2,ceiling(length(scenario_set)/2)),as.table=T,ylab="",
          auto.key=list(space="top", columns=4, 
                        points=FALSE, rectangles=TRUE,
                        title="", cex.title=1,
@@ -461,12 +470,12 @@ dev.off();
 my.settings$superpose.polygon$col = twostage_nointer_colors;
 trellis.device("pdf",file="recommendations_nointer_dec30.pdf",height=5,width=7,family="serif");
 barchart(prop~x|factor(setting),groups=code,
-         data=twostage_nointer_nonnull_props,
+         data=twostage_nointer_nonnull_props[twostage_nointer_nonnull_props$setting %in% scenario_set,],
          main = "# in DEC = 30 (No Efficacy Analysis at 15)",
          stack = T,
          par.settings=my.settings,ylim=c(-0.001,1),
          scales = list(x=list(cex=0.75)),
-         layout=c(2,3),as.table=T,ylab="",
+         layout=c(2,ceiling(length(scenario_set)/2)),as.table=T,ylab="",
          auto.key=list(space="top", columns=4, 
                        points=FALSE, rectangles=TRUE,
                        title="", cex.title=1,
@@ -485,12 +494,12 @@ dev.off();
 my.settings$superpose.polygon$col = twostage_nointer_colors_short;
 trellis.device("pdf",file="recommendations_nointer_dec30_mod.pdf",height=5,width=7,family="serif");
 barchart(prop~x|factor(setting),groups=code,
-         data=twostage_nointer_nonnull_props_short[twostage_nonnull_props_short$analysis=="mod",],
+         data=twostage_nointer_nonnull_props_short[twostage_nonnull_props_short$analysis=="mod"&twostage_nonnull_props_short$setting %in% scenario_set,],
          main = "# in DEC = 30 (No Efficacy Analysis at 15)",
          stack = T,
          par.settings=my.settings,ylim=c(-0.001,1),
          scales = list(x=list(cex=0.75),y=list(at=c(0.2,0.4,0.6,0.8),labels=c(20,40,60,80))),
-         layout=c(2,3),as.table=T,ylab="",
+         layout=c(2,ceiling(length(scenario_set)/2)),as.table=T,ylab="",
          auto.key=list(space="top", columns=5, 
                        points=FALSE, rectangles=TRUE,
                        title="", cex.title=1,

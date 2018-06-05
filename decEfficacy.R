@@ -10,14 +10,16 @@ rm(list=ls(all=TRUE));
 require(dfcrm);require(rstan);require(binom);
 my.work.computer = T;
 if(my.work.computer){
-  setwd("/Users/philb/Desktop/Work/ExpCohortStudy/Efficacy");
-  titesim_folder = "/users/philb/Desktop/Work/ExpCohortStudy/";
+  setwd("/Users/philb/Desktop/Work/ExpCohortStudy/Efficacy/github");
+  titesim_folder = "/users/philb/Desktop/Work/ExpCohortStudy/Efficacy/github/";
+  write_to_folder = "/Users/philb/Desktop/Work/ExpCohortStudy/Efficacy/github/";
   array_id = 31;
-  niter = 13;
+  niter = 10;
 } else {
   setwd("/home/philb/DecEfficacy");
   array_id <- as.numeric(Sys.getenv('SLURM_ARRAY_TASK_ID'));  
   titesim_folder = "";
+  write_to_folder = "";
 }
 
 file.name = "DEC_eff";
@@ -30,7 +32,6 @@ source(paste(titesim_folder,"titesimfunctions_phil_V2.R",sep=""));
 source("Functions.R");
 
 attach(arglist[[array_id]]);
-
 
 set.seed(random_seed);
 #############################################
@@ -527,6 +528,6 @@ assign(paste0("sim",array_id),list(params = arglist[[array_id]],
 
 detach();
 
-save(list=paste0("sim",array_id),file=paste(file.name,array_id,".RData",sep=""));
+save(list=paste0("sim",array_id),file=paste(write_to_folder,file.name,array_id,".RData",sep=""));
 
 
