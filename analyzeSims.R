@@ -23,7 +23,7 @@ if(my.work.computer){
 #37:48 = scenarios 1-6 from the supplement to the AOC paper
 #49:60 = scenarios 1-6 from the supplement to the AOC paper using a different skeleton for the crm
 sim_set = c(1:18,37:48);#load the first skeleton sets of skims
-file.name = "DEC_eff";
+file_name = "DEC_eff";
 
 #################################################################
 #################################################################
@@ -62,7 +62,7 @@ colnames(onestage_nonnull_props) =
 #colnames(null_props) = c("setting","design","analysis","type","prop");
 
 for(curr_sim in sim_set) {
-  load(file=paste(file.name,curr_sim,".RData",sep=""));
+  load(file=paste(file_name,curr_sim,".RData",sep=""));
 }
 
 null_counter = 1;

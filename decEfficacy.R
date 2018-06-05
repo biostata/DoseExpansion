@@ -22,12 +22,12 @@ if(my.work.computer){
   write_to_folder = "";
 }
 
-file.name = "DEC_eff";
+file_name = "DEC_eff";
 
 set.seed(100);
 source("genParams.R");
 
-rm(list=setdiff(ls(),c("arglist","my.work.computer","file.name","array_id","offset","titesim_folder")))
+rm(list=setdiff(ls(),c("arglist","my.work.computer","file_name","array_id","offset","titesim_folder")))
 source(paste(titesim_folder,"titesimfunctions_phil_V2.R",sep=""));
 source("Functions.R");
 
@@ -528,6 +528,6 @@ assign(paste0("sim",array_id),list(params = arglist[[array_id]],
 
 detach();
 
-save(list=paste0("sim",array_id),file=paste(write_to_folder,file.name,array_id,".RData",sep=""));
+save(list=paste0("sim",array_id),file=paste(write_to_folder,file_name,array_id,".RData",sep=""));
 
 
