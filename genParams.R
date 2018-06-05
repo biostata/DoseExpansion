@@ -47,21 +47,25 @@ if(!"eff_perturb_sd_null"%in%ls()){
 }
 
 if(!"dec_description"%in%ls()) {
-  dec_description = list(list(n_dec = 5,two_stage_dec = F,
-                              skip_first_stage = F,
-                              pocock_alpha = 0.00185,#For global toxicity stopping rule
-                              ci_level_stage1 = 0.80,
-                              ci_level_stage2 = NA),#For efficacy analyses
-                         list(n_dec = 5,two_stage_dec = T,
-                              skip_first_stage = F,
-                              pocock_alpha=0.0014,
-                              ci_level_stage1 = 0.80,#For efficacy analyses
-                              ci_level_stage2 = 0.80), 
-                         list(n_dec = 5,two_stage_dec = T,
-                              skip_first_stage = T,
-                              pocock_alpha=0.0014,
-                              ci_level_stage1 = NA,#For efficacy analyses
-                              ci_level_stage2 = 0.80))#For efficacy analyses
+  dec_description = list(
+    #15 patients per DEC
+    list(n_dec = 5,two_stage_dec = F,
+         skip_first_stage = F,
+         pocock_alpha = 0.00185,#For global toxicity stopping rule
+         ci_level_stage1 = 0.80,
+         ci_level_stage2 = NA),#For efficacy analyses
+    #30 patients per DEC with interim analysis after 15 patients in each DEC
+    list(n_dec = 5,two_stage_dec = T,
+         skip_first_stage = F,
+         pocock_alpha=0.0014,
+         ci_level_stage1 = 0.80,#For efficacy analyses
+         ci_level_stage2 = 0.80), 
+    #30 patients per DEC with no interim analysis
+    list(n_dec = 5,two_stage_dec = T,
+         skip_first_stage = T,
+         pocock_alpha=0.0014,
+         ci_level_stage1 = NA,#For efficacy analyses
+         ci_level_stage2 = 0.80))#For efficacy analyses
 }
 
 if(!"arglist"%in%ls()){arglist = list();}
