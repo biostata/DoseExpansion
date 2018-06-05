@@ -14,6 +14,9 @@ if(my.work.computer){
   write_to_folder = "/Users/philb/Desktop/Work/ExpCohortStudy/Efficacy";
 } 
 
+#sim_set should be any subset of 1:60 (assuming the default settings were used in genParams.R) and corresponds to the simulation labels constructed by genParams.R
+#scenario_set should be any subset of 1:10 and corresponds to the scenario labels used in the paper
+
 #sim_set is constructed according to the 'arglist' variable constructed by genParams
 #1:18 = scenarios 1-6 from the main AOC paper (3 DEC types for each scenario)
 #19:36 = scenarios 1-6 from the main AOC paper using a different skeleton for the crm
@@ -21,6 +24,12 @@ if(my.work.computer){
 #49:60 = scenarios 1-6 from the supplement to the AOC paper using a different skeleton for the crm
 sim_set = c(1:18,37:48);#load the first skeleton sets of skims
 file.name = "DEC_eff";
+
+#################################################################
+#################################################################
+scenario_set = 1:6;#choose this (and comment out the below line) for the figures in the main text 
+#scenario_set = 7:10;#choose this (and comment out the above line) for the figures in the supplement 
+
 
 nonnull_category_codes = ((1:8)*100+1);
 nonnull_category_codes_short = c(1,3,6,7,8)*100+1;
@@ -250,11 +259,6 @@ my.settings <- list(
   add.line = list(col.line="#909090")
 )
 #9D9D9D
-
-#################################################################
-#################################################################
-scenario_set = 1:6;#choose this (and comment out the below line) for the figures in the main text 
-#scenario_set = 7:10;#choose this (and comment out the above line) for the figures in the supplement 
 
 #################################################################
 #################################################################
